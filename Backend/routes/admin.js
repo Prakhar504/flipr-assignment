@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const upload = require('../middlewares/upload');
-const { processImage } = require('../middlewares/imageProcessor');
 const { authenticateAdmin, generateAdminToken } = require('../middlewares/auth');
 const Project = require('../models/Project');
 const Client = require('../models/Client');
@@ -42,9 +41,8 @@ router.post('/projects',
         return res.status(400).json({ message: 'Image file is required' });
       }
 
-      // Process image (resize to 450x350)
-      const processedPath = await processImage(req.file.path);
-      const imageUrl = `/uploads/${processedPath.split('\\').pop().split('/').pop()}`;
+      // Cloudinary URL is available in req.file.path
+      const imageUrl = req.file.path;
 
       const project = new Project({
         name: req.body.name,
@@ -85,9 +83,8 @@ router.post('/clients',
         return res.status(400).json({ message: 'Image file is required' });
       }
 
-      // Process image (resize to 450x350)
-      const processedPath = await processImage(req.file.path);
-      const imageUrl = `/uploads/${processedPath.split('\\').pop().split('/').pop()}`;
+      // Cloudinary URL is available in req.file.path
+      const imageUrl = req.file.path;
 
       const client = new Client({
         name: req.body.name,
