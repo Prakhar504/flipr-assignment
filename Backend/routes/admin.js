@@ -42,6 +42,8 @@ router.post('/projects',
       }
 
       // Cloudinary URL is available in req.file.path
+      console.log('File uploaded:', req.file);
+      console.log('Cloudinary URL:', req.file.path);
       const imageUrl = req.file.path;
 
       const project = new Project({
@@ -84,6 +86,8 @@ router.post('/clients',
       }
 
       // Cloudinary URL is available in req.file.path
+      console.log('File uploaded:', req.file);
+      console.log('Cloudinary URL:', req.file.path);
       const imageUrl = req.file.path;
 
       const client = new Client({
